@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Wiki{% endblock %}
+
+{% block styles %}
+    <style>
+        #articles {
+            list-style-type: '📰';
+        }
+
+        #wiki_article {
+            list-style-type: '🎯';
+        }
+    </style>
+{% endblock styles %}
+
+{% block wiki %}active{% endblock %}
+
+{% block content %}
+    <ul id="articles">
+        {% for article in articles %}
+            <li>
+                <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+            </li>
+            <ul id="wiki_article">
+                <li>Category: {{ article.category.name }}</li>
+            </ul>
+        {% endfor %}
+    </ul>
+{% endblock content %}
