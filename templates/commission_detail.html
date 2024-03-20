@@ -1,0 +1,81 @@
+{% extends './base.html' %}
+
+{% load static %}
+
+{% block title %}Commission Details{% endblock %}
+
+{% block styles %}
+    <style>
+        #dates{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #comments_holder{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        #comments{
+            background-color: transparent;
+            list-style-type: disc;
+        }
+
+        #comment{
+            display: list-item;
+        }
+
+        #back{
+            text-align: center;
+            border-radius: 20px;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            color: black;
+            text-decoration: none;
+        }
+
+        #back:hover{
+            border-radius: 20px;
+            background-color: #70DCF8;
+        }
+
+        #header_align{
+            display: flex;
+        }
+
+        #no_comment{
+            list-style-type: none;
+        }
+    </style>
+{% endblock styles %}
+
+{% block comm %}active{% endblock %}
+
+{% block content %}
+    <div id="header">
+        <div id="header_align">
+            <a id="back" href="/commissions/list">←</a>
+            <h2>{{ commission }}</h2>
+        </div>
+        <p>{{ commission.description }}</p>
+        <p><strong>People Required:</strong> {{ commission.people_required }}</p>
+    </div>
+    <div id="dates">
+        <p>Created on: {{ commission.created_on }}</p>
+        <p>Updated on: {{ commission.updated_on }}</p>
+    </div>
+    <div id="comments_holder">
+        <ul id="comments">
+            {% if commission.comments.all.exists %}
+                {% for comment in commission.comments.all %}        
+                    <li id="comment">{{ comment.entry }}</li>
+                {% endfor %}
+            {% else %}
+                <li id="no_comment">No comments</li>
+            {% endif %}
+        </ol>
+    </div>
+{% endblock content %}

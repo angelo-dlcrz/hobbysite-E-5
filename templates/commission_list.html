@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Commission List{% endblock %}
+
+{% block styles %}
+    <style>
+        a{
+            text-decoration: none;
+            color:black;
+        }
+
+        #commission-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #commission-container, #body {
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+        }
+
+        #content {
+            flex: 1 1 auto;
+        }
+
+        #commission {
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: left;
+            transition: background-color 0.3s ease;
+            margin: 8px; 
+            box-sizing: border-box; 
+        }
+
+        #commission:hover {
+            background: black;
+            color: white;
+        }
+    </style>
+{% endblock styles %}
+
+{% block comm %}active{% endblock %}
+
+{% block content %}
+    <div id="commission-container">
+        <div id="body">
+            <article id="content">
+            {% for commission in object_list %}
+                <a href="{{ commission.get_absolute_url }}">
+                    <div id="commission">
+                        <h2>{{ commission.title }}</h2>
+                        {% if commission.exceeds %}
+                            <p>{{ commission.get_first_words }}...</p>
+                        {% else %}
+                            <p>{{ commission.get_first_words }}</p>
+                        {% endif %}
+                        <p>People Required: {{ commission.people_required }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+            </article>
+        </div>
+    </div>
+{% endblock content %}
