@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Merchandise Store{% endblock %}
+
+{% block styles %}
+    <style>
+        #merch_list{
+            display: grid;
+            grid-template-rows: repeat(1, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 1.5fr;
+            gap: 5px;
+            width: 100%;
+            height: 100%;
+            list-style-type: none;
+            background-color: white;
+            text-align: center;
+        }
+
+        #merch_list li a{
+            display: block;
+            color: black;
+            font-size: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            background-color: #70DCF8;
+        }
+
+        #merch_list li a:hover {
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+{% endblock styles %}
+
+{% block merch %}active{% endblock %}
+
+{% block content %}
+    <h2 style="text-align: center;">Merchandise Store</h2>
+    <div id="merch_list">
+        {% for product_type in object_list %}
+        <li>
+            <h3><a href="{{ product_type.get_absolute_url }}">{{ product_type }}</a></h3>
+            <p>{{ product_type.description }}</p>
+        </li>
+        {% endfor %}
+    </div>
+{% endblock content %}
