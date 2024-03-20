@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Forum Details{% endblock %}
+
+{% block styles %}
+<style>
+#content{
+    position: relative;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px #888888;
+    width: 70%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    word-wrap: break-word; /* This will allow the text to wrap */
+}
+
+#return {
+    position: absolute;
+    top: -30px; /* Adjust top distance as needed */
+    color: black;
+    text-decoration: none;
+}
+
+#return:hover{
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+}
+</style>
+{% endblock %}
+
+{% block forum %}active{% endblock %}
+
+{% block content %}
+
+<div id="content">
+    <a id="return" href="/forum/threads">Back to Forums</a>
+    <h3 style="text-align: center; width: 95%; margin: 15px auto">{{ object.title }}</h3> 
+    <p style="text-align: justify; width: 95%; margin: auto;">{{ post.entry }}</p>
+    <br>
+</div>
+
+{% endblock %}
