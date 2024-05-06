@@ -40,10 +40,10 @@
 {% block content %}
     <h2 style="text-align: center;">Merchandise Store</h2>
     <div id="merch_list">
-        {% for product_type in object_list %}
+        {% for product in object_list %}
         <li>
-            <h3><a href="{{ product_type.get_absolute_url }}">{{ product_type }}</a></h3>
-            <p>{{ product_type.description }}</p>
+            <h3><a href="{{ product.get_absolute_url }}">{{ product }}</a></h3>
+            <p>Php - {{ product.price }}</p>
         </li>
         {% endfor %}
     </div>
