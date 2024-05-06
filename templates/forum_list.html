@@ -4,51 +4,49 @@
 {% block title %}Forum List{% endblock %}
 
 {% block styles %}
-<style>
-#content_list{
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 2px 2px #888888;
-    margin-bottom: 10px;
-    text-align: left;
-    padding-left: 10px;
-    list-style-type: none;
-    text-decoration: none;
-}
+    <style>
+        #content_list{
+            border: 1px solid black;
+            border-radius: 5px;
+            box-shadow: 2px 2px #888888;
+            margin-bottom: 10px;
+            text-align: left;
+            padding-left: 10px;
+            list-style-type: none;
+            text-decoration: none;
+        }
 
-#content_link{
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-}
+        #content_link{
+            cursor: pointer;
+            margin-left: auto;
+            margin-right: auto;
+            width: 70%;
+        }
 
-#content_list:hover{
-    background-color: #F2F4F5;
-    transition: background-color 0.2s ease;
-}
+        #content_list:hover{
+            background-color: #F2F4F5;
+            transition: background-color 0.2s ease;
+        }
 
-#content_list li {
-    word-wrap: break-word;
-}
-</style>
-{% endblock %}
+        #content_list li {
+            word-wrap: break-word;
+        }
+    </style>
+{% endblock styles %}
 
 {% block forum %}active{% endblock %}
 
 {% block content %}
+    <h3 style="text-align: center;">Threads</h3> 
 
-<h3 style="text-align: center;">Threads</h3> 
-
-{% for post in object_list %}
-<div id="content_link" onclick="location.href='{{ post.get_absolute_url }}';">
-    <ul id="content_list">
-        <li>
-            <h4 style="color:gray; font-size: small;">Category: {{ post.category }}</h4>
-            <h4 style="color:black;">{{ post.title }}</h4>
-        </li>
-    </ul>
-</div>
-{% endfor %}
-
-{% endblock %}
+    {% for post in object_list %}
+    <div id="content_link" onclick="location.href='{{ post.get_absolute_url }}';">
+        <ul id="content_list">
+            <li>
+                <h4 style="color:gray; font-size: small;">Category: {{ post.category }}</h4>
+                <h4 style="color:black;">{{ post.title }}</h4>
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+{% endblock content %}
