@@ -70,6 +70,14 @@
     <li><a id="{% block wiki %}{% endblock %}" href="/wiki/articles">Wiki</a></li>
     <li><a id="{% block forum %}{% endblock %}" href="/forum/threads">Forum</a></li>
     <li><a id="{% block comm %}{% endblock %}" href="/commissions/list">Commissions</a></li>
+    {% if user.is_authenticated %}
+        <li><a id="{% block logout %}{% endblock %}" href="{% url "user_management:logout-user" %}">Log Out</a></li>
+        <li><a id="{% block profile %}{% endblock %}" href="{% url "profile" %}">Profile</a></li>
+        <li><a id="{% block display_name %}{% endblock %}">{{ user.username }}</a></li>
+    {% else %}
+        <li><a id="{% block signup %}{% endblock %}" href="{% url "user_management:register-user" %}">Sign Up</a></li>
+        <li><a id="{% block login %}{% endblock %}" href="{% url "user_management:login-user" %}">Log In</a></li>
+    {% endif %}
 </ul>
 
 {% block content %}{% endblock %}
