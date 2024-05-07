@@ -10,6 +10,8 @@
         body {
             font-family: 'Poppins';
             font-weight: 400;
+            padding: 0;
+            margin: 0;
         }
         
         #navbar {
@@ -41,17 +43,10 @@
             opacity: 0.7;
             transition: opacity 0.3s ease;
         }
-        
-        #navbar li:first-child {
-            padding-top: 8px;
-            height: 100%;
-        }
 
         #brand_name {
             color: white;
             margin-right: 50px;
-            margin-bottom: 0;
-            margin-top: 0;
         }
 
         #active {
@@ -65,11 +60,19 @@
 <body>
     
 <ul id="navbar">
-    <li><h2 id="brand_name"> Juan Click Wonders </h1></li>
+    <li><a id="brand_name" href="{% url 'home' %}"> Juan Click Wonders </h1></a></li>
     <li><a id="{% block merch %}{% endblock %}" href="/merchstore/items">Merchandise</a></li>
     <li><a id="{% block wiki %}{% endblock %}" href="/wiki/articles">Wiki</a></li>
     <li><a id="{% block forum %}{% endblock %}" href="/forum/threads">Forum</a></li>
     <li><a id="{% block comm %}{% endblock %}" href="/commissions/list">Commissions</a></li>
+    {% if user.is_authenticated %}
+        <li><a id="{% block display_name %}{% endblock %}" style="background-color: #7da6f1; pointer-events: none; color: black !important; margin-left: 50px;">{{ user.username|upper }}</a></li>
+        <li><a id="{% block profile %}{% endblock %}" href="{% url "profile" %}">Profile</a></li>
+        <li><a id="{% block logout %}{% endblock %}" href="{% url "user_management:logout-user" %}">Log Out</a></li>
+    {% else %}
+        <li><a id="{% block signup %}{% endblock %}" href="{% url "user_management:register-user" %}">Sign Up</a></li>
+        <li><a id="{% block login %}{% endblock %}" href="{% url "user_management:login-user" %}">Log In</a></li>
+    {% endif %}
 </ul>
 
 {% block content %}{% endblock %}

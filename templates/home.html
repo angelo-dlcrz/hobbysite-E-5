@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block styles %}
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        h1{
+            text-align: center;
+        }
+        
+        input[type=text], input[type=password], input[type=email] {
+            width: 100%;
+            padding: 15px;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+        
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        .container {
+            width: 30%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 35px;
+        }
+    </style>
+{% endblock styles %}
+
+{% block content %}
+<div class="container">
+    <h1>Home</h1>
+    <p style="text-align: justify;"> 
+        Introducing Juan Click Wonders: Your tech haven! Dive into a world of limitless possibilities with our wiki, commissions, forums, and merchandise. 
+        Get the latest tech insights, bring your ideas to life, connect with fellow enthusiasts, and showcase your tech flair with our products. 
+        Explore Juan Click Wonders today and unlock a universe of tech wonders!
+    </p>
+    {% if user.is_authenticated %}
+        <p style="font-size: small; text-align: center;">You are logged in as {{ request.user }}. Click here to <a href="{% url "user_management:logout-user" %}">log out</a></p>
+    {% endif %}
+</div>
+
+{% endblock content %}
