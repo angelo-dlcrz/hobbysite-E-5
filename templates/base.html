@@ -73,7 +73,7 @@
     {% if user.is_authenticated %}
         <li><a id="{% block logout %}{% endblock %}" href="{% url "user_management:logout-user" %}">Log Out</a></li>
         <li><a id="{% block profile %}{% endblock %}" href="{% url "profile" %}">Profile</a></li>
-        <li><a id="{% block display_name %}{% endblock %}">{{ user.username }}</a></li>
+        <li><a id="{% block display_name %}{% endblock %}" style="background-color: #A6B7FC; color: black !important;">{{ user.username }}</a></li>
     {% else %}
         <li><a id="{% block signup %}{% endblock %}" href="{% url "user_management:register-user" %}">Sign Up</a></li>
         <li><a id="{% block login %}{% endblock %}" href="{% url "user_management:login-user" %}">Log In</a></li>
