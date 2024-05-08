@@ -7,11 +7,8 @@ from .models import Product, Transaction
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
-        widgets = {
-            'product_type': forms.Select(),
-            'status': forms.Select(),
-        }
+        fields = ['name', 'product_type',
+                  'description', 'price', 'stock', 'status']
 
 
 class TransactionForm(forms.ModelForm):

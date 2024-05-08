@@ -50,9 +50,14 @@ class MerchDetailView(DetailView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class MerchCreateView(CreateView):
+class MerchCreateView(LoginRequiredMixin, CreateView):
     model = Product
     template_name = 'merch_create.html'
+    form_class = ProductForm
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user.profile
+        return super().form_valid(form)
 
 
 class MerchUpdateView(UpdateView):

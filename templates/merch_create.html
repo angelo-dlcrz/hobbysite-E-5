@@ -2,13 +2,29 @@
 
 {% load static %}
 
-{% block title %}Product Add{% endblock %}
+{% block title %}Add Product{% endblock %}
 
 {% block styles %}
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        div{
+            text-align: center;
+        }
+    </style>
 {% endblock styles %}
 
 {% block merch %}active{% endblock %}
 
 {% block content %}
-
+    <div>
+        <h1>Add a Product</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add</button>
+        </form>
+    </div>
 {% endblock content %}
