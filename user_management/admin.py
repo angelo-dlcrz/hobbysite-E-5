@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import User, ProxyUser, Profile
+from .models import ProxyUser, Profile
 
 
 class ProfileInline(admin.StackedInline):
