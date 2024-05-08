@@ -90,6 +90,13 @@
                 <strong><h3>Wiki Articles Created</h3></strong>
             </div>
             <div class="overflow-auto">
+                {% if my_articles.exists %}
+                    {% for article in my_articles %}
+                        <h4 class="card-body">{{ article.title }}</h4>
+                    {% endfor %}
+                {% else %}
+                    <h4 class="card-body">No Written Articles</h4>
+                {% endif %}
             </div>
         </div>
         <div class="card">
