@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Cart{% endblock %}
+
+{% block styles %}
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        div{
+            text-align: center;
+        }
+
+        div li{
+            list-style-type: none;
+        }
+    </style>
+{% endblock styles %}
+
+{% block merch %}active{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Cart</h1>
+        {% for owner in owners%}
+            {% if owner != request.user.profile %}
+                <h2>Bought from {{ owner }}</h2>
+            {% endif %}
+            {% for transaction in object_list %}
+                {% if transaction.product.owner == owner and transaction.buyer == request.user.profile %}
+                    <li>{{ transaction }}</li>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock content %}

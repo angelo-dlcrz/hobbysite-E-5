@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Wiki{% endblock %}
+
+{% block wiki %}active{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+{% endblock content %}

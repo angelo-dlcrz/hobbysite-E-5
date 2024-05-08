@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from commissions.models import Commission
+from user_management.models import Profile
+from merchstore.models import Transaction
 
 
 class HomePageView(TemplateView):
@@ -17,4 +19,8 @@ class DashboardView(TemplateView):
             author=self.request.user.profile)
         ctx['applied_commissions'] = Commission.objects.filter(
             jobs__applications__applicant=self.request.user.profile)
+        ctx["transactions"] = Transaction.objects.all()
+        ctx["owners"] = Profile.objects.all()
+        ctx["buyers"] = Profile.objects.all()
+
         return ctx
