@@ -7,8 +7,40 @@
 {% block wiki %}active{% endblock %}
 
 {% block content %}
-    <h2>{{ article.title }}</h2>
-    <p>{{ article.entry | linebreaks }}</p>
-    <p>Created On: {{ article.created_on }}</p>
-    <p>Updated On: {{ article.updated_on }}</p>
+    <header><img src="{{ article_image.url }}"></header>
+    <h2>{{ current_article.title }}</h2>
+    <p>Created by: {{ current_article.author.display_name }}</p>
+    <p>Category: {{ current_category.get_name_display }}</p>
+    <p>Created On: {{ current_article.created_on }}</p>
+    <p>Updated On: {{ current_article.updated_on }}</p>
+    <p>Entry: {{ current_article.entry }}</p>
+    <p>Read More from {{ current_category.get_name_display }} Category</p>
+    <ul>
+        {% for article in read_others %}
+            <li><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+    {% if request.user.is_authenticated %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Post Comment">
+        </form>
+    {% endif %}
+
+    <p>Comments Section</p>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.entry }}</li>
+        {% endfor %}
+    </ul>
+
+    <p>Want to go back to the Articles List? <a href="{% url "wiki:wiki_list" %}">Click here!</a></p>
+    {% if request.user.profile == current_article.author %}
+        <p>Want to edit the article? <a href="{% url "wiki:wiki_update" current_article.pk %}">Click here!</a></p>
+    {% endif %}
+    
+
+    
 {% endblock content %}
