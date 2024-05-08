@@ -18,11 +18,11 @@ class ProductType(models.Model):
 
 
 class Product(models.Model):
-    product_status = {
-        "Available": "Available",
-        "On Sale": "On Sale",
-        "Out of Stock": "Out of Stock",
-    }
+    product_status = (
+        ("Available", "Available"),
+        ("On Sale", "On Sale"),
+        ("Out of Stock", "Out of Stock"),
+    )
 
     name = models.CharField(max_length=255)
     product_type = models.ForeignKey(
@@ -56,13 +56,13 @@ class Product(models.Model):
 
 
 class Transaction(models.Model):
-    transaction_status = {
-        "On Cart": "On Cart",
-        "To Pay": "To Pay",
-        "To Ship": "To Ship",
-        "To Receive": "To Receive",
-        "Delivered": "Delivered",
-    }
+    transaction_status = (
+        ("On Cart", "On Cart"),
+        ("To Pay", "To Pay"),
+        ("To Ship", "To Ship"),
+        ("To Receive", "To Receive"),
+        ("Delivered", "Delivered"),
+    )
 
     buyer = models.ForeignKey(
         Profile,
