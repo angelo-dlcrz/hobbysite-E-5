@@ -5,11 +5,11 @@ from user_management.models import Profile
 
 class ArticleCategory(models.Model):
     class Category(models.TextChoices):
-        LAPTOPS = 'LP'
-        PHONES = 'PH'
-        PROCESSORS = 'PR'
-        KEYBOARDS = 'KB'
-        TELEVISIONS = 'TV'
+        LAPTOPS = 'LAPTOPS'
+        PHONES = 'PHONES'
+        PROCESSORS = 'PROCESSORS'
+        KEYBOARDS = 'KEYBOARDS'
+        TELEVISIONS = 'TELEVISIONS'
 
     name = models.CharField(max_length=255, choices=Category.choices, default='TV')
     description = models.TextField()
