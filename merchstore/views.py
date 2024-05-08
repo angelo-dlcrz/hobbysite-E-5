@@ -1,6 +1,9 @@
+from django.shortcuts import redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Product, ProductType, Transaction
 from .forms import ProductForm, TransactionForm
@@ -21,6 +24,30 @@ class MerchListView(ListView):
 class MerchDetailView(DetailView):
     model = Product
     template_name = 'merch_detail.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['form'] = TransactionForm()
+        return ctx
+
+    def post(self, request, *args, **kwargs):
+        form = TransactionForm(request.POST)
+        product = self.get_object()
+
+        if form.is_valid():
+            if request.user.is_authenticated():
+                transaction = form.save(commit=False)
+                transaction.buyer = request.user.profile
+                transaction.product = product
+                transaction.status = "On Cart"
+                transaction.save()
+
+                product.stock -= transaction.amount
+                product.save()
+                return redirect('merchstore:cart')
+            else:
+                return redirect('login-user')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class MerchCreateView(CreateView):

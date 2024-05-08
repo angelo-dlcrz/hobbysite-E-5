@@ -17,4 +17,4 @@ class ProductForm(forms.ModelForm):
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ('status', )
+        fields = ('amount', )
