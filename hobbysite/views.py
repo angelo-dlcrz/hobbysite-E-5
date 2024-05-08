@@ -6,6 +6,7 @@ from commissions.models import Commission
 from forum.models import Thread
 from user_management.models import Profile
 from merchstore.models import Transaction
+from wiki.models import Article
 
 
 class HomePageView(TemplateView):
@@ -26,5 +27,6 @@ class DashboardView(TemplateView):
         ctx["transactions"] = Transaction.objects.all()
         ctx["owners"] = Profile.objects.all()
         ctx["buyers"] = Profile.objects.all()
+        ctx['my_articles'] = Article.objects.filter(author=self.request.user.profile)
 
         return ctx
