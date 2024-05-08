@@ -21,11 +21,28 @@
 {% block merch %}active{% endblock %}
 
 {% block content %}
-    <h2 style="text-align: center;">{{ product }}</h2>
+    <h2 style="text-align: center;">Merchandise Store</h2>
     <div id="details">
         <h3>{{ product.name }} - Php {{ product.price }}</h3>
-        <p>{{ product.description }}</p>
-        <h4>{{ product.product_type }}</h4>
-        <p>{{ product.product_type.description }}</p>
+        <p>Product Type: {{ product.product_type }}</p>
+        <p>Description: {{ product.description }}</p>
+        <p>Stock: {{ product.stock }}</p>
+        <p>Status: {{ product.status }}</p>
     </div>
+
+    {% if product.owner != request.user.profile %}
+        {% if product.stock > 0 %}
+            <h4>Purchase a Product</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Buy</button>
+                </form>
+        {% else %}
+            <p>This product is out of stock.</p>
+            <button type="button" disabled>Buy</button>
+        {% endif %}
+    {% else %}
+            <a href="{% url 'merchstore:merch_update' pk=product.pk %}">Edit Product</a>
+    {% endif %}
 {% endblock content %}
