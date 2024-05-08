@@ -4,7 +4,14 @@ from django.urls import reverse
 from user_management.models import Profile
 
 class ArticleCategory(models.Model):
-    name = models.CharField(max_length=255)
+    class Category(models.TextChoices):
+        LAPTOPS = 'LP'
+        PHONES = 'PH'
+        PROCESSORS = 'PR'
+        KEYBOARDS = 'KB'
+        TELEVISIONS = 'TV'
+
+    name = models.CharField(max_length=255, choices=Category.choices, default='TV')
     description = models.TextField()
 
     def __str__(self):
@@ -33,6 +40,7 @@ class Article(models.Model):
     header_image = models.ImageField(
         upload_to="images/",
         null=True,
+        blank=True,
     )
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
