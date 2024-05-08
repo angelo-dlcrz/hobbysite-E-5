@@ -79,6 +79,7 @@ class Transaction(models.Model):
         max_length=32,
         choices=transaction_status,
         null=True,
+        default="On Cart",
     )
     created_on = models.DateTimeField(auto_now_add=True)
 

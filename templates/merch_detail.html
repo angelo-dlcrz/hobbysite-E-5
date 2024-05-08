@@ -31,16 +31,17 @@
     </div>
 
     {% if product.owner != request.user.profile %}
-        <h4>Purchase a Product</h4>
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_div }}
-                {% if product.stock > 0 %}
-                    <button type="submit">Submit</button>
-                {% else %}
-                <button type="submit" disabled>Submit</button>
-                {% endif %}
-            </form>
+        {% if product.stock > 0 %}
+            <h4>Purchase a Product</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Buy</button>
+                </form>
+        {% else %}
+            <p>This product is out of stock.</p>
+            <button type="button" disabled>Buy</button>
+        {% endif %}
     {% else %}
             <a href="{% url 'merchstore:merch_update' pk=product.pk %}">Edit Product</a>
     {% endif %}
