@@ -37,14 +37,14 @@ class Commission(models.Model):
     def exceeds(self):
         return len(self.description) > 500
 
-    class Meta:
-        ordering = ['-commission_status', '-created_on']
-    
     def get_commission_status(self):
-        if self.commission_status=="ECOMPLETED":
+        if self.commission_status == "ECOMPLETED":
             return "COMPLETED"
         else:
             return self.commission_status
+
+    class Meta:
+        ordering = ['-commission_status', '-created_on']
 
 
 class Job(models.Model):
@@ -66,7 +66,7 @@ class Job(models.Model):
         return self.role
 
     class Meta:
-        ordering = ['job_status', '-manpower', 'role']
+        ordering = ['-job_status', '-manpower', 'role']
 
 
 class JobApplication (models.Model):
@@ -81,9 +81,9 @@ class JobApplication (models.Model):
         related_name="applicants"
     )
     application_status_options = (
-        ("PENDING", "PENDING"),
-        ("ACCEPTED", "ACCEPTED"),
-        ("REJECTED", "REJECTED")
+        ("APENDING", "PENDING"),
+        ("BACCEPTED", "ACCEPTED"),
+        ("CREJECTED", "REJECTED")
     )
     application_status = models.CharField(
         max_length=10, choices=application_status_options, default="PENDING")
