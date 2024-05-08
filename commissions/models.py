@@ -92,5 +92,13 @@ class JobApplication (models.Model):
     def __str__(self):
         return "{} - {}".format(str(self.applicant.display_name), str(self.job.role))
 
+    def get_application_status(self):
+        if self.application_status == "APENDING":
+            return "PENDING"
+        elif self.application_status == "BACCEPTED":
+            return "ACCEPTED"
+        else:
+            return "REJECTED"
+
     class Meta:
         ordering = ['application_status', '-applied_on']
