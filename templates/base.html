@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:700|Poppins:400');
         
@@ -67,7 +69,7 @@
     <li><a id="{% block forum %}{% endblock %}" href="/forum/threads">Forum</a></li>
     <li><a id="{% block comm %}{% endblock %}" href="/commissions/list">Commissions</a></li>
     {% if user.is_authenticated %}
-        <li><a id="{% block display_name %}{% endblock %}" style="background-color: #7da6f1; pointer-events: none; color: black !important; margin-left: 50px;">{{ user.username|upper }}</a></li>
+        <li><a id="{% block display_name %}{% endblock %}" href="{% url 'dashboard' %}" style="background-color: #7da6f1; color: black !important; margin-left: 50px;">{{ user.username|upper }}</a></li>
         <li><a id="{% block profile %}{% endblock %}" href="{% url "profile" %}">Profile</a></li>
         <li><a id="{% block logout %}{% endblock %}" href="{% url "user_management:logout-user" %}">Log Out</a></li>
     {% else %}

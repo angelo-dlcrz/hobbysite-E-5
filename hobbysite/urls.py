@@ -17,12 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import HomePageView
+from .views import HomePageView, DashboardView
 from user_management.views import ProfileUpdateView
 
 
 urlpatterns = [
     path('home/', HomePageView.as_view(), name='home'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('admin/', admin.site.urls),
     path('forum/', include('forum.urls', namespace='forum')),
     path('merchstore/', include('merchstore.urls', namespace='merchstore')),
