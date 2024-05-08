@@ -16,7 +16,7 @@
             flex-direction: column;
         }
 
-        #commission-container, #body {
+        #commission-container {
             display: flex;
             flex: 1 1 auto;
             flex-direction: column;
@@ -25,20 +25,25 @@
         #content {
             flex: 1 1 auto;
         }
-
-        #commission {
-            border: 1px solid black;
-            border-radius: 10px;
-            padding: 10px;
-            text-align: left;
-            transition: background-color 0.3s ease;
-            margin: 8px; 
-            box-sizing: border-box; 
+        #categories{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
         }
-
-        #commission:hover {
-            background: black;
-            color: white;
+        #my_commissions, #all_commissions, #applied_commissions{
+            display: none;
+        }
+        .body{
+            display: none;
+        }
+        #my_commissions:checked ~ #my{
+            display:block;
+        }
+        #all_commissions:checked ~ #all{
+            display:block;
+        }
+        #applied_commissions:checked ~ #applied{
+            display:block;
         }
     </style>
 {% endblock styles %}
@@ -47,22 +52,75 @@
 
 {% block content %}
     <div id="commission-container">
-        <div id="body">
-            <article id="content">
-            {% for commission in object_list %}
-                <a href="{{ commission.get_absolute_url }}">
-                    <div id="commission">
-                        <h2>{{ commission.title }}</h2>
-                        {% if commission.exceeds %}
-                            <p>{{ commission.get_first_words }}...</p>
-                        {% else %}
-                            <p>{{ commission.get_first_words }}</p>
-                        {% endif %}
-                        <p>People Required: {{ commission.people_required }}</p>
+        <div id="categories">
+            {% if request.user.is_authenticated %}
+                <label for="my_commissions"><strong><a href="#"></a>My Commissions</strong></label>
+                <input type="radio" id="my_commissions" name="category">
+                {% for commission in my_commissions %}
+                    <div class="card position-relative start-50 top-50 bottom-50 translate-middle-x body" id="my" style="width: 90vw;">
+                        <div class="card-body ">
+                            <h5 class="card-title">{{ commission.title }}</h5>
+                            {% if commission.exceeds %}
+                                <p class="card-text">{{ commission.get_first_words }}...</p>
+                            {% else %}
+                                <p class="card-text">{{ commission.get_first_words }}</p>
+                            {% endif %}
+                            <a href="{{ commission.get_absolute_url }}" class="card-link">Explore Commission</a>
+                        </div>
                     </div>
-                </a>
-            {% endfor %}
-            </article>
+                {% endfor %}
+
+                <label for="applied_commissions"><strong>Applied Commissions</strong></label>
+                <input type="radio" id="applied_commissions" name="category">
+                {% for commission in applied_commissions %}
+                    <div class="card position-relative start-50 top-50 bottom-50 translate-middle-x body" id="applied" style="width: 90vw;">
+                        <div class="card-body ">
+                            <h5 class="card-title">{{ commission.title }}</h5>
+                            {% if commission.exceeds %}
+                                <p class="card-text">{{ commission.get_first_words }}...</p>
+                            {% else %}
+                                <p class="card-text">{{ commission.get_first_words }}</p>
+                            {% endif %}
+                            <a href="{{ commission.get_absolute_url }}" class="card-link">Explore Commission</a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <label for="all_commissions"><strong>All Commissions</strong></label>
+                <input type="radio" id="all_commissions" name="category" checked="checked">
+                {% for commission in object_list %}
+                    <div class="card position-relative start-50 top-50 bottom-50 translate-middle-x body" id="all" style="width: 90vw; z-index:1">
+                        <div class="card-body ">
+                            <h5 class="card-title">{{ commission.title }}</h5>
+                            {% if commission.exceeds %}
+                                <p class="card-text">{{ commission.get_first_words }}...</p>
+                            {% else %}
+                                <p class="card-text">{{ commission.get_first_words }}</p>
+                            {% endif %}
+                            <a href="{{ commission.get_absolute_url }}" class="card-link">Explore Commission</a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div id="create">
+                    <a href="/commissions/add"><button type="button" class="btn btn-outline-dark btn-lg position-relative start-50 top-50 bottom-50 translate-middle-x">Add New!</button></a>
+                    <!-- <a href="/commissions/add">Add New!</a> -->
+                </div>
+            {% else %}
+                <label for="all_commissions"><strong>All Commissions</strong></label>
+                <input type="radio" id="all_commissions" name="category" checked="checked">
+                {% for commission in object_list %}
+                    <div class="card position-relative start-50 top-50 bottom-50 translate-middle-x body" id="all" style="width: 90vw; z-index:1">
+                        <div class="card-body ">
+                            <h5 class="card-title">{{ commission.title }}</h5>
+                            {% if commission.exceeds %}
+                                <p class="card-text">{{ commission.get_first_words }}...</p>
+                            {% else %}
+                                <p class="card-text">{{ commission.get_first_words }}</p>
+                            {% endif %}
+                            <a href="{{ commission.get_absolute_url }}" class="card-link">Explore Commission</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock content %}

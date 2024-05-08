@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Transaction List{% endblock %}
+
+{% block styles %}
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        div{
+            text-align: center;
+        }
+
+        div li{
+            list-style-type: none;
+        }
+    </style>
+{% endblock styles %}
+
+{% block merch %}active{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Transactions List</h1>
+        {% for buyer in buyers %}
+            {% if buyer != request.user.profile %}
+                <h2>Bought by {{ buyer }}</h2>
+                <ul>
+                    {% for transaction in object_list %}
+                        {% if transaction.buyer == buyer and transaction.product.owner == request.user.profile%}
+                            <li>{{ transaction }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Create Commission{% endblock %}
+
+{% block styles %}
+    <style>
+        a{
+            text-decoration: none;
+            color:black;
+        }
+    </style>
+{% endblock styles %}
+
+{% block comm %}active{% endblock %}
+
+{% block content %}
+<h1>Create Commission</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h2>JOBS</h2>
+    {{ jobs.management_form }}
+    <table>
+        {% for form in jobs %}
+            {{ form.as_table }}
+        {% endfor %}
+    </table>
+    <button>Create</button>
+</form>
+<a href="/commissions/list">Cancel</a>
+{% endblock content %}
+

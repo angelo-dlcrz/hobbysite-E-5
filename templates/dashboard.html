@@ -4,33 +4,49 @@
 
 {% block title %}Commission List{% endblock %}
 
+
+
 {% block styles %}
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
     <style>
         img{
             height:auto;
         }
         .card{
-            width:15vw;
             margin: 1%;
-            margin-bottom: 0px;
+            margin-bottom: 10px;
+            width:50%;
+            height:auto;
         }
         .activities{
             display:flex;
             justify-content: space-evenly;
             height: 32vh;
         }
-        .card{
-            width:50%;
-            height:auto;
-        }
         .card-header{
             background-color: black;
             color:white;
         }
+
+        a{
+            display: block;
+            text-decoration: none;
+            color: black;
+            width: fit-content;
+            font-weight: 600;
+            font-size: large;
+        }
+
+        a:hover{
+            color: black;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
     </style>
 {% endblock styles %}
-
-{% block comm %}active{% endblock %}
 
 {% block content %}
     <div id="merch" class="activities">
@@ -38,14 +54,33 @@
             <div class="card-header">
                 <strong><h3>Products Bought</h3></strong>
             </div>
+            <div class="overflow-auto">
+                {% for owner in owners %}
+                    {% if owner != request.user.profile %}
+                        {% for transaction in transactions %}
+                            {% if transaction.product.owner == owner and transaction.buyer == request.user.profile %}
+                                <h4>{{ transaction.product.name }} - {{ transaction.amount }}pcs</h4>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
-        <div class="overflow-auto">
-        </div>
+        
         <div class="card">
             <div class="card-header">
                 <strong><h3>Products Sold</h3></strong>
             </div>
             <div class="overflow-auto">
+                {% for buyer in buyers %}
+                    {% if buyer != request.user.profile %}
+                        {% for transaction in transactions %}
+                            {% if transaction.buyer == buyer and transaction.product.owner == request.user.profile%}
+                                <h4>{{ transaction.product.name }} - {{ transaction.amount }}pcs</h4>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -55,6 +90,13 @@
                 <strong><h3>Wiki Articles Created</h3></strong>
             </div>
             <div class="overflow-auto">
+                {% if my_articles.exists %}
+                    {% for article in my_articles %}
+                        <h4 class="card-body">{{ article.title }}</h4>
+                    {% endfor %}
+                {% else %}
+                    <h4 class="card-body">No Written Articles</h4>
+                {% endif %}
             </div>
         </div>
         <div class="card">
@@ -62,6 +104,13 @@
                 <strong><h3>Threads Created</h3></strong>
             </div>
             <div class="overflow-auto">
+                {% if user_threads.exists %}
+                    {% for threads in user_threads %}
+                        <a class="card-body" href="{{ threads.get_absolute_url }}">{{ threads.title }}</a>
+                    {% endfor %}
+                {% else %}
+                    <h5 class="card-body">No Threads Created Yet</h4>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -76,7 +125,7 @@
                         <h4 class="card-body">{{ commission.title }}</h4>
                     {% endfor %}
                 {% else %}
-                    <h5 class="card-body">No Applied Commissions Yet</h4>
+                    <h4 class="card-body">No Applied Commissions Yet</h4>
                 {% endif %}
             </div>
             
@@ -91,7 +140,7 @@
                         <h4 class="card-body">{{ commission.title }}</h3>
                     {% endfor %}
                 {% else %}
-                    <h4 class="card-body">No Applied Commissions Yet</h3>
+                    <h5 class="card-body">No Applied Commissions Yet</h3>
                 {% endif %}
             </div>
         </div>
