@@ -1,5 +1,4 @@
 from django.db.models.base import Model as Model
-from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
@@ -7,7 +6,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
-from .forms import UserLoginForm, UserRegisterForm, ProfileUpdateForm, UserUpdateForm
+from .forms import UserLoginForm, UserRegisterForm, ProfileUpdateForm
 from .models import Profile
 
 
@@ -86,7 +85,6 @@ class ProfileUpdateView(LoginRequiredMixin, TemplateView):
 
         if 'save' in request.POST:
             if profile_form.is_valid():
-                # profile = profile_form.save(commit=False)
                 profile.display_name = profile_form.cleaned_data['display_name']
                 profile.email_address = profile_form.cleaned_data['email_address']
                 profile.save()
