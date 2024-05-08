@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Create Job{% endblock %}
+
+{% block styles %}
+    <style>
+        a{
+            text-decoration: none;
+            color:black;
+        }
+    </style>
+{% endblock styles %}
+
+{% block comm %}active{% endblock %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button>Submit</button>
+</form>
+<a href="{% url 'commissions:commission_detail' commission_pk %}">Cancel</a>
+{% endblock content %}

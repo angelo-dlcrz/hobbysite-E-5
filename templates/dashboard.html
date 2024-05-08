@@ -48,22 +48,39 @@
     </style>
 {% endblock styles %}
 
-{% block comm %}active{% endblock %}
-
 {% block content %}
     <div id="merch" class="activities">
         <div class="card">
             <div class="card-header">
                 <strong><h3>Products Bought</h3></strong>
             </div>
+            <div class="overflow-auto">
+                {% for owner in owners %}
+                    {% if owner != request.user.profile %}
+                        {% for transaction in transactions %}
+                            {% if transaction.product.owner == owner and transaction.buyer == request.user.profile %}
+                                <h4>{{ transaction.product.name }} - {{ transaction.amount }}pcs</h4>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
-        <div class="overflow-auto">
-        </div>
+        
         <div class="card">
             <div class="card-header">
                 <strong><h3>Products Sold</h3></strong>
             </div>
             <div class="overflow-auto">
+                {% for buyer in buyers %}
+                    {% if buyer != request.user.profile %}
+                        {% for transaction in transactions %}
+                            {% if transaction.buyer == buyer and transaction.product.owner == request.user.profile%}
+                                <h4>{{ transaction.product.name }} - {{ transaction.amount }}pcs</h4>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -101,7 +118,7 @@
                         <h4 class="card-body">{{ commission.title }}</h4>
                     {% endfor %}
                 {% else %}
-                    <h5 class="card-body">No Applied Commissions Yet</h4>
+                    <h4 class="card-body">No Applied Commissions Yet</h4>
                 {% endif %}
             </div>
             
