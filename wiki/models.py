@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from user_management.models import Profile
 
+
 class ArticleCategory(models.Model):
     class Category(models.TextChoices):
         LAPTOPS = 'LAPTOPS'
@@ -11,7 +12,8 @@ class ArticleCategory(models.Model):
         KEYBOARDS = 'KEYBOARDS'
         TELEVISIONS = 'TELEVISIONS'
 
-    name = models.CharField(max_length=255, choices=Category.choices, default='TV')
+    name = models.CharField(
+        max_length=255, choices=Category.choices, default='TV')
     description = models.TextField()
 
     def __str__(self):
@@ -19,7 +21,7 @@ class ArticleCategory(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name_plural = 'Article Categories' 
+        verbose_name_plural = 'Article Categories'
 
 
 class Article(models.Model):
@@ -27,14 +29,14 @@ class Article(models.Model):
     author = models.ForeignKey(
         Profile,
         null=True,
-        on_delete = models.SET_NULL,
+        on_delete=models.SET_NULL,
         related_name='article_author',
     )
     category = models.ForeignKey(
         'ArticleCategory',
-        null = True,
-        on_delete = models.SET_NULL,
-        related_name = 'categories',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='categories',
     )
     entry = models.TextField()
     header_image = models.ImageField(
@@ -46,13 +48,13 @@ class Article(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse('wiki:wiki_detail', args = [self.pk])
-    
+        return reverse('wiki:wiki_detail', args=[self.pk])
+
     def __str__(self):
         return self.title
-    
+
     class Meta:
-        ordering = ['-created_on'] 
+        ordering = ['-created_on']
 
 
 class Comment(models.Model):
@@ -60,7 +62,7 @@ class Comment(models.Model):
         Profile,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='comment_author',
+        related_name='wiki_author',
     )
     article = models.ForeignKey(
         'Article',
@@ -73,4 +75,4 @@ class Comment(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['created_on'] 
+        ordering = ['created_on']
