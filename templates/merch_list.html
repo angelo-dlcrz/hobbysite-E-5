@@ -6,6 +6,32 @@
 
 {% block styles %}
     <style>
+        #my_products{
+            list-style-type: none;
+            top: 0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #my_products li {
+            display: inline-block;
+            text-align: center;
+        }
+        
+        #status{
+            background-color: #ddd;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 16px;
+        }
+
         #merch_list{
             display: grid;
             grid-template-rows: repeat(1, 1fr);
@@ -38,12 +64,31 @@
 {% block merch %}active{% endblock %}
 
 {% block content %}
+    {% if request.user.is_authenticated %}
+        <h2 style="text-align: center;">My Products</h2>
+        {% for product_type in product_types %}
+            <ul id="my_products">
+                {% for product in object_list %}
+                    {% if product.product_type == product_type and product.owner == request.user.profile %}
+                        <li>
+                            <h4>{{ product_type }}</h4>
+                            <h3><a href="{{ product.get_absolute_url }}">{{ product }}</a></h3>
+                            <p>Php - {{ product.price }}</p>
+                            <h4 id="status">{{ product.status }}</h4>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+        <h3><a href="{% url 'merchstore:merch_create' %}">Create a New Product</a></h3>
+    {% endif %}
     <h2 style="text-align: center;">Merchandise Store</h2>
     <div id="merch_list">
         {% for product in object_list %}
         <li>
             <h3><a href="{{ product.get_absolute_url }}">{{ product }}</a></h3>
             <p>Php - {{ product.price }}</p>
+            <h4 id="status">{{ product.status }}</h4>
         </li>
         {% endfor %}
     </div>
