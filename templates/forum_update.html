@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Thread Details{% endblock %}
+
+{% block styles %}
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        h1{
+            text-align: center;
+            margin-top: 0px;
+        }
+        
+        input[type=text]{
+            width: 100%;
+            padding: 10px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        input[type=text]:focus {
+            outline: none;
+        }
+        
+        button {
+            background-color: #70DCF8;
+            color: black;
+            font-weight: bold;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+        
+        button:hover {
+            opacity:1;
+        }
+        
+        .container {
+            padding: 30px;
+            width: 30%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 60px;
+            border: 1px solid black;
+            border-radius: 5px;
+            box-shadow: 2px 2px #888888;
+        }
+
+        #return {
+            position: relative;
+            top: -60px;
+            left: -25px;
+            color: black;
+            text-decoration: none;
+        }
+
+        #return:hover{
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        select {
+            width: 100%;
+        }
+
+        textarea {
+            width: 100%;
+            resize: none;
+        }
+    </style>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="container">
+    <a id="return" href="{% url 'forum:thread' pk=thread.pk %}">Back to Forums</a>
+    <h1>Edit Thread</h1>
+    {% if is_owner %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button>Submit</button>
+        </form>
+    {% else %}
+        <p style="margin-left: 10px">You are not the owner of this thread</p>
+    {% endif %}
+</div>
+
+{% endblock content %}
